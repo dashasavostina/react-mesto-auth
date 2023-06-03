@@ -27,23 +27,22 @@ function App() {
   const [cards, setCards] = useState([]);
   const [email, setEmail] = useState('');
   const [isLogged, setLogged] = useState(false);
-  const [status, setStatus] = useState(false);
+  const [isSuccessInfoTooltipStatus, setIsSuccessInfoTooltipStatus] = useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-   
-      Promise.all([apiJoin.getUserData(), apiJoin.getInitialCards()])
-      .then(([userData, cardObject]) => {
+      if (isLogged) {
+        Promise.all([apiJoin.getUserData(), apiJoin.getInitialCards()])
+        .then(([userData, cardObject]) => {
         setCurrentUser(userData);
         setCards(cardObject);
       })
       .catch((err) => {
         console.log(`Возникла глобальная ошибка: ${err}`);
       });
-    
-    
-  }, []);
+      }
+  }, [isLogged]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -145,7 +144,7 @@ function App() {
   useEffect( () => {
     const userToken = localStorage.getItem('token')
     if (userToken) { 
-      apiAuth.getContent(userToken)
+      apiAuth.checkToken(userToken)
         .then( (res) => { 
           setEmail(res.data.email); 
           setLogged(true); 
@@ -153,23 +152,24 @@ function App() {
         .catch( (err) => { 
           console.log(`Возникла ошибка верификации токена: ${err}`) })
     }
-  }, [history, isLogged])
+  }, [])
 
   function handleRegister(password, email) {
-    apiAuth.userRegistration(password, email) 
+    apiAuth.register(password, email) 
     .then(() => {
       setInfoTooltipOpen(true);
-      setStatus(true);
+      setIsSuccessInfoTooltipStatus(true);
+      history.push('/sign-in');
     })
     .catch((err) => {
       console.log(`Возникла ошибка при регистрации: ${err}`);
       setInfoTooltipOpen(true);
-      setStatus(false);
+      setIsSuccessInfoTooltipStatus(false);
     })
   }
 
   function handleLogin(password, email) {
-    apiAuth.userAuthorization(password, email)
+    apiAuth.authorize(password, email)
     .then((res) => {
       if (res.token) {
         localStorage.setItem('token', res.token);
@@ -181,12 +181,13 @@ function App() {
     .catch((err) => {
       console.log(`Возникла ошибка при авторизации: ${err}`);
       setInfoTooltipOpen(true);
-      setStatus(false);
+      setIsSuccessInfoTooltipStatus(false);
     })
   }
 
   function handleLogout () { 
-    localStorage.removeItem('token'); setLogged(false)
+    localStorage.removeItem('token'); 
+    setLogged(false);
   }
 
   return (
@@ -195,7 +196,7 @@ function App() {
         <Header 
           isLogged = {isLogged}
           email = {email}
-          isLogout = {handleLogout}
+          logOut = {handleLogout}
         />
         <Switch>
           <ProtectedRoute exact path="/"
@@ -214,7 +215,7 @@ function App() {
               handleLogin = {handleLogin}
               isOpen = {infoTooltipOpen}
               onClose = {closeAllPopups}
-              status = {status}
+              status = {isSuccessInfoTooltipStatus}
             />
           </Route>
           <Route path="/sign-up">
@@ -222,7 +223,7 @@ function App() {
               handleRegister = {handleRegister}
               isOpen = {infoTooltipOpen}
               onClose = {closeAllPopups}
-              status = {status}
+              status = {isSuccessInfoTooltipStatus}
             />
           </Route>
         </Switch>
@@ -250,7 +251,7 @@ function App() {
         <InfoTooltip 
           isOpen ={infoTooltipOpen}
           onClose = {closeAllPopups}
-          status = {status}
+          status = {isSuccessInfoTooltipStatus}
         />
         <PopupWithForm
           isOpen={isConfirmPopupOpen}

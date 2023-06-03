@@ -1,4 +1,4 @@
-export const apiData = {
+const apiData = {
   link: 'https://mesto.nomoreparties.co/v1/cohort-63/',
   headers: {
     authorization: '63c1674b-e0d6-4861-a55c-25296a36a323',
@@ -6,3 +6,6 @@ export const apiData = {
   }
 }
 
+const url = "https://auth.nomoreparties.co/";
+
+export {apiData, url}

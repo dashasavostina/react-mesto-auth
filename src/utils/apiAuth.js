@@ -1,9 +1,11 @@
+import { url } from "./utils";
+
 class ApiAuth {
     constructor(urlAuth) {
         this._urlAuth = urlAuth;
     }
 
-    _serverResponceProcessing (res) {
+    _checkResponse(res) {
         if (res.ok) {
           return res.json();
         } else {
@@ -11,17 +13,17 @@ class ApiAuth {
         }
       }
 
-    getContent(token) {
+    checkToken(token) {
         return fetch(`${this._urlAuth}users/me`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization" : `Bearer ${token}`
             }
           })
-            .then(this._serverResponceProcessing)
+            .then(this._checkResponse)
     }
 
-    userAuthorization (password, email) {
+    authorize(password, email) {
         return fetch(`${this._urlAuth}signin`, {
           method: 'POST',
           headers: {
@@ -29,10 +31,10 @@ class ApiAuth {
           },
           body: JSON.stringify({password, email})
         })
-          .then(this._serverResponceProcessing)
+          .then(this._checkResponse)
       }
 
-      userRegistration (password, email) {
+      register(password, email) {
         return fetch(`${this._urlAuth}signup`, {
           method: 'POST',
           headers: {
@@ -40,8 +42,8 @@ class ApiAuth {
           },
           body: JSON.stringify({password, email})
         })
-          .then(this._serverResponceProcessing)
+          .then(this._checkResponse)
       }
 }
 
-export const apiAuth = new ApiAuth("https://auth.nomoreparties.co/");
+export const apiAuth = new ApiAuth(url);

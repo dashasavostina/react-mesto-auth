@@ -16,11 +16,8 @@ export default function Register(props) {
     function handleSubmitButton(e) {
         e.preventDefault();
         props.handleRegister(password, email);
-        setEmail('');
-        setPassword('');
     }
     return (
-        <>
           <div className="auth">
             <h3 className="auth__title">Регистрация</h3>
             <form className="auth__form" onSubmit={handleSubmitButton}>
@@ -61,6 +58,5 @@ export default function Register(props) {
                 <Link to="sign-in" className="auth__link">Войти</Link>
             </div>
           </div>
-        </>
     )
 }

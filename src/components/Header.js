@@ -11,7 +11,7 @@ export default function Header(props) {
         {props.isLogged ? (
           <>
             <p className="header__menu">{props.email}</p>
-            <Link to="/sign-in" className="header__menu" onClick={props.isLogout}>Выйти</Link>
+            <Link to="/sign-in" className="header__menu" onClick={props.logOut}>Выйти</Link>
           </>
         ) : (
           <>

@@ -15,12 +15,9 @@ export default function Login(props) {
     function handleSubmitButton(e) {
         e.preventDefault();
         props.handleLogin(password, email);
-        setEmail('');
-        setPassword('');
     }
 
     return(
-        <>
           <div className="auth">
             <h3 className="auth__title">Вход</h3>
             <form className="auth__form" onSubmit={handleSubmitButton}>
@@ -55,6 +52,5 @@ export default function Login(props) {
                 <button className="auth__submit-button" type="submit">Войти</button>
             </form>
           </div>
-        </>
     )
 }

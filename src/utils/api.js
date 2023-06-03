@@ -6,7 +6,7 @@ import {apiData} from "./utils";
         this._headers = headers;
     }
 
-    _serverResponceProcessing(res) {
+    _checkResponce(res) {
       if (res.ok) {
         return res.json()
       } else {
@@ -21,7 +21,7 @@ import {apiData} from "./utils";
         body: JSON.stringify({ name, link})
       })
       .then(res => {
-        return this._serverResponceProcessing(res)
+        return this._checkResponce(res)
       })
     }
 
@@ -29,7 +29,7 @@ import {apiData} from "./utils";
         return fetch(`${this._link}cards`, {
           headers: this._headers
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
     }
 
     deleteCard(cardId) {
@@ -37,14 +37,14 @@ import {apiData} from "./utils";
           headers: this._headers,
           method: 'DELETE',
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
     }
 
     getUserData() {
         return fetch(`${this._link}users/me`, {
           headers: this._headers
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
     }
 
     sendUserData(profileData) {
@@ -53,7 +53,7 @@ import {apiData} from "./utils";
           method: 'PATCH',
           body: JSON.stringify({ name: profileData.name, about: profileData.job })
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
       }
 
     sendAvatarData(avatarLink) {
@@ -62,7 +62,7 @@ import {apiData} from "./utils";
           method: 'PATCH',
           body: JSON.stringify({ avatar: avatarLink.avatar })
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
       }
 
     changeLikeCardStatus(cardId, isLiked) {
@@ -71,13 +71,13 @@ import {apiData} from "./utils";
           headers: this._headers,
           method: 'PUT',
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
       } else {
         return fetch(`${this._link}cards/${cardId}/likes`, {
           headers: this._headers,
           method: 'DELETE',
         })
-          .then(res => { return this._serverResponceProcessing(res) })
+          .then(res => { return this._checkResponce(res) })
       }
     }
 }
