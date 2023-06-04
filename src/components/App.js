@@ -3,7 +3,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import React, { useEffect, useState} from "react";
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import PopupWithForm from "./PopupWithForm";
 import { apiJoin } from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
@@ -226,6 +226,8 @@ function App() {
               status = {isSuccessInfoTooltipStatus}
             />
           </Route>
+          <Route path="/*">{<Redirect to={isLogged ? "/" : "/sign-in"}/>}</Route>
+          
         </Switch>
         <Footer />
         <EditAvatarPopup
