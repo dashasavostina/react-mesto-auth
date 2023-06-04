@@ -35,7 +35,7 @@ export default function EditProfilePopup(props) {
       onClose={props.onClose}
       onSubmit={handleSubmit}
       title="Редактировать профиль"
-      title_type="popup__title-edit"
+      titleType="popup__title-edit"
       name="edit"
       children={
         <>

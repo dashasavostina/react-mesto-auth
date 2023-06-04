@@ -227,7 +227,6 @@ function App() {
             />
           </Route>
           <Route path="/*">{<Redirect to={isLogged ? "/" : "/sign-in"}/>}</Route>
-          
         </Switch>
         <Footer />
         <EditAvatarPopup

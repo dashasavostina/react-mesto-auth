@@ -13,7 +13,7 @@ export default function PopupWithForm(props) {
           type="button"
           onClick={props.onClose}
         ></button>
-        <h3 className={`popup__title ${props.title_type}`}>{props.title}</h3>
+        <h3 className={`popup__title ${props.titleType}`}>{props.title}</h3>
         <form
           className="popup__form"
           name={props.name}

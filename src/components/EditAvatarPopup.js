@@ -21,7 +21,7 @@ export default function EditAvatarPopup(props) {
       onClose={props.onClose}
       onSubmit={handleSubmit}
       title="Обновить аватар"
-      title_type="popup__title_avatar"
+      titleType="popup__title_avatar"
       name="avatar-add"
       children={
         <>
