@@ -1,5 +1,8 @@
 # Проект «Mesto»
 
+![mesto](https://github.com/dashasavostina/react-mesto-auth/assets/85075899/558fbb74-9e9f-46db-b349-af48622c8ae9)
+
+
 # Краткое описание
 
 Одностраничный сайт. В web-приложении можно добавлять, удалять и лайкать карточки с фотографиями.
